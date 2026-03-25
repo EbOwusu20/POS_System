@@ -1,5 +1,6 @@
 package com.pos.pos_system.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -23,6 +24,9 @@ public class Sale {
    private double totalAmount;
     @Getter
     @Setter
+    private LocalDateTime saleDate;
+    @Getter
+    @Setter
     private String paymentMethod;
     @Getter
     @Setter
@@ -30,6 +34,7 @@ public class Sale {
      @Getter
      @Setter
      @OneToMany(mappedBy = "sale", cascade = CascadeType.ALL)
+     @JsonManagedReference
     private List<SaleItem> items;
 
      public  Sale(){}
@@ -41,7 +46,6 @@ public class Sale {
          this.items = items;
          this.createdAt = LocalDateTime.now();
     }
-
 
 
 
