@@ -16,9 +16,7 @@ public class Sale {
     @Setter
     private Long id;
 
-    @Getter
-    @Setter
-   private  Long customerId;
+
     @Getter
     @Setter
    private double totalAmount;
@@ -31,6 +29,11 @@ public class Sale {
     @Getter
     @Setter
      private LocalDateTime createdAt;
+    @Getter
+    @Setter
+    @ManyToOne
+    @JoinColumn(name = "customer_id")
+    private Customer customer;
      @Getter
      @Setter
      @OneToMany(mappedBy = "sale", cascade = CascadeType.ALL)
@@ -39,9 +42,7 @@ public class Sale {
 
      public  Sale(){}
 
-    public Sale( Long customerId, double totalAmount, String paymentMethod, LocalDateTime createdAt, List<SaleItem> items){
-         this.customerId = customerId;
-         this.paymentMethod = paymentMethod;
+    public Sale( double totalAmount, String paymentMethod, LocalDateTime createdAt, List<SaleItem> items){         this.paymentMethod = paymentMethod;
          this.totalAmount = totalAmount;
          this.items = items;
          this.createdAt = LocalDateTime.now();

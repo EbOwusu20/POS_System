@@ -4,9 +4,11 @@ package com.pos.pos_system.service;
 import com.pos.pos_system.dto.SaleItemDTO;
 import com.pos.pos_system.dto.SaleRequestDTO;
 import com.pos.pos_system.dto.SaleResponseDTO;
+import com.pos.pos_system.model.Customer;
 import com.pos.pos_system.model.Product;
 import com.pos.pos_system.model.Sale;
 import com.pos.pos_system.model.SaleItem;
+import com.pos.pos_system.repository.CustomerRepository;
 import com.pos.pos_system.repository.ProductRepository;
 import com.pos.pos_system.repository.SaleRepository;
 import org.springframework.stereotype.Service;
@@ -21,10 +23,12 @@ public class SaleService {
 
     private final SaleRepository saleRepository;
     private final ProductRepository productRepository;
+    private final CustomerRepository customerRepository;
 
-    public  SaleService(SaleRepository saleRepository, ProductRepository productRepository){
+    public  SaleService(SaleRepository saleRepository, ProductRepository productRepository, CustomerRepository customerRepository){
         this.saleRepository = saleRepository;
         this.productRepository = productRepository;
+        this.customerRepository = customerRepository;
 
     }
 
@@ -70,10 +74,15 @@ public class SaleService {
         //CREATE SALE;
 
         Sale sale = new Sale();
-        sale.setCustomerId(request.getCustomerId());
         sale.setPaymentMethod(request.getPaymentMethod());
         sale.setTotalAmount(total);
         sale.setItems(saleItems);
+
+        //UPDATE PROCESS SALE
+        Customer customer = customerRepository.findById(request.getCustomerId()).
+                orElseThrow(() -> new RuntimeException("Customer not found"));
+
+                sale.setCustomer(customer);
 
 
         //Link SaleItem -> sale
