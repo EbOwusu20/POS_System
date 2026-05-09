@@ -29,6 +29,7 @@ public class SaleResponseDTO {
         this.items = items;
         this.saleDate = saleDate;
         this.id = id;
+        this.totalAmount = totalAmount;
     }
 
 }

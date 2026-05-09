@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api/sales")
 public class SaleController {
@@ -34,6 +35,11 @@ public class SaleController {
     @GetMapping("/{id}")
     public SaleResponseDTO getSaleById(@PathVariable Long id){
         return  saleService.getSaleById(id);
+    }
+
+    @GetMapping("/customer/{customerId}")
+    public List<SaleResponseDTO> getSalesByCustomer(@PathVariable Long customerId) {
+        return saleService.getSalesByCustomer(customerId);
     }
 
     // DELETE SALE

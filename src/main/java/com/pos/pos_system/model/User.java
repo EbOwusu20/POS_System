@@ -1,14 +1,13 @@
-package com.pos.pos_system.model;
 
+package com.pos.pos_system.model;
 
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Table(name = "users")
+@Table(name="users")
 public class User {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Getter
@@ -18,22 +17,24 @@ public class User {
 
     @Getter
     @Setter
+    @Column(unique=true)
     private String username;
+
     @Getter
     @Setter
     private String password;
+
     @Getter
     @Setter
-    private String role;
+    @Enumerated(EnumType.STRING)
+    private Role role;
 
-    public User(){}
-
-    public User( Long id, String username, String password, String role){
-        this.id = id;
+    public User() {}
+    public User(String username, String password, Role role) {
         this.username = username;
         this.password = password;
         this.role = role;
     }
 
-
+    // getters & setters
 }

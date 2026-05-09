@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api/customers")
 public class CustomerController {
@@ -22,6 +24,7 @@ public class CustomerController {
     public Customer create (@RequestBody Customer customer){
         return customerService.create(customer);
     }
+
 
     //GET ALL
     @GetMapping
@@ -42,10 +45,13 @@ public class CustomerController {
     }
 
     //DELETE
+    @DeleteMapping("/{id}")
     public String delete(@PathVariable Long id){
         customerService.delete(id);
         return  "Customer deleted successfully";
     }
+
+
 
 
 

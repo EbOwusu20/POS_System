@@ -23,9 +23,13 @@ public class UserService {
     }
 
     //Login Logic (compare encrypted password)
-    public User login(String username, String password ){
-        User user = userRepository.findByUsername(username).orElseThrow(()-> new RuntimeException("User not found"));
-        if (!passwordEncoder.matches(password, user.getPassword())){
+    public User login(String username, String password) {
+        if (username == null || password == null) {
+            throw new RuntimeException("Invalid password");
+        }
+        String u = username.trim();
+        User user = userRepository.findByUsername(u).orElseThrow(() -> new RuntimeException("User not found"));
+        if (!passwordEncoder.matches(password, user.getPassword())) {
             throw new RuntimeException("Invalid password");
         }
 

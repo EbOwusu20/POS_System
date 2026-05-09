@@ -47,7 +47,7 @@ public class SaleService {
 
 
             //CHECK STOCK
-            if(product.getQuantity() < itemDTO.getProductId()){
+            if(product.getQuantity() < itemDTO.getQuantity()){
                 throw new RuntimeException("Not Enough Stock for product: " + product.getName());
             }
 
@@ -112,6 +112,13 @@ public class SaleService {
         Sale sale = saleRepository.findById(id).orElseThrow(()-> new RuntimeException("Sale not found with id: " + id));
 
         return mapToDTO(sale);
+    }
+
+    public List<SaleResponseDTO> getSalesByCustomer(Long customerId) {
+        return saleRepository.findByCustomerId(customerId)
+                .stream()
+                .map(this::mapToDTO)
+                .collect(Collectors.toList());
     }
 
     private SaleResponseDTO mapToDTO(Sale sale) {

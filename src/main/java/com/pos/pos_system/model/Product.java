@@ -12,6 +12,9 @@ public class Product {
     @Setter
     private Long id;
 
+
+
+
     @Setter
     @Getter
     private String name;
